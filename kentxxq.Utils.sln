@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kentxxq.Utils", "src\kentxxq.Utils\kentxxq.Utils.csproj", "{260F9C6A-A4A3-42D3-BEBF-AB312B52775A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kentxxq.Utils.Tests", "src\kentxxq.Utils.Tests\kentxxq.Utils.Tests.csproj", "{33EFF26F-3B5F-43F3-951F-C9B24B0C67F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kentxxq.Utils.Tests", "src\kentxxq.Utils.Tests\kentxxq.Utils.Tests.csproj", "{33EFF26F-3B5F-43F3-951F-C9B24B0C67F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F9DB8AC0-DF76-4AA9-8330-18943E96B38A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
