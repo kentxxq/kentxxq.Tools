@@ -29,8 +29,8 @@ namespace kentxxq.Utils
                 LdapDirectoryIdentifier ldi = new LdapDirectoryIdentifier(server, port);
                 using (LdapConnection ldapConnection = new LdapConnection(ldi))
                 {
-                    Console.WriteLine("LdapConnection is created successfully.");
                     ldapConnection.AuthType = AuthType.Basic;
+                    ldapConnection.SessionOptions.SecureSocketLayer = port == 636;
                     if (!verifySSL)
                     {
                         ldapConnection.SessionOptions.VerifyServerCertificate = (_, _) => { return true; };
@@ -38,7 +38,6 @@ namespace kentxxq.Utils
                     ldapConnection.SessionOptions.ProtocolVersion = 3;
                     NetworkCredential nc = new NetworkCredential(userDN, password);
                     ldapConnection.Bind(nc);
-                    Console.WriteLine("LdapConnection authentication success");
                 }
                 return true;
             }
