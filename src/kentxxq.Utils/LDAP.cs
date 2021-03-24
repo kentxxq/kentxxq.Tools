@@ -30,7 +30,10 @@ namespace kentxxq.Utils
                 using (LdapConnection ldapConnection = new LdapConnection(ldi))
                 {
                     ldapConnection.AuthType = AuthType.Basic;
-                    ldapConnection.SessionOptions.SecureSocketLayer = port == 636;
+                    if (port == 636)
+                    {
+                        ldapConnection.SessionOptions.SecureSocketLayer = true;
+                    }
                     if (!verifySSL)
                     {
                         ldapConnection.SessionOptions.VerifyServerCertificate = (_, _) => { return true; };
