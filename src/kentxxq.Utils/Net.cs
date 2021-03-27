@@ -10,20 +10,19 @@ namespace kentxxq.Utils
         /// 获取本机ipv4内网ip，如果网络不可用返回127.0.0.1
         /// </summary>
         /// <returns></returns>
-        public static IPAddress GetLocalIPv4()
+        public static IPAddress GetLocalIP()
         {
-            if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            try
             {
-                IPHostEntry iPHostEntry = Dns.GetHostEntry(Dns.GetHostName());
-                foreach (var item in iPHostEntry.AddressList)
-                {
-                    if (item.AddressFamily == AddressFamily.InterNetwork)
-                    {
-                        return item;
-                    }
-                }
+                using Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0);
+                socket.Connect("223.5.5.5", 53);
+                IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
+                return endPoint.Address;
             }
-            return IPAddress.Loopback;
+            catch (Exception)
+            {
+                return IPAddress.Loopback;
+            }
         }
 
         /// <summary>
@@ -36,21 +35,13 @@ namespace kentxxq.Utils
             if (testIp.StartsWith("::1")) return true;
 
             byte[] ip = IPAddress.Parse(testIp).GetAddressBytes();
-            switch (ip[0])
+            return ip[0] switch
             {
-                case 10:
-                case 127:
-                    return true;
-
-                case 172:
-                    return ip[1] >= 16 && ip[1] < 32;
-
-                case 192:
-                    return ip[1] == 168;
-
-                default:
-                    return false;
-            }
+                10 or 127 => true,
+                172 => ip[1] >= 16 && ip[1] < 32,
+                192 => ip[1] == 168,
+                _ => false,
+            };
         }
     }
 }

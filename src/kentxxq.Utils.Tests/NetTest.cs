@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Xunit;
 
@@ -10,14 +11,11 @@ namespace kentxxq.Utils.Tests
         [Fact]
         public void TestGetLocalIPv4()
         {
-            var iPAddress = Net.GetLocalIPv4();
-            if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            var iPAddress = Net.GetLocalIP().ToString();
+            if (iPAddress != "127.0.0.1")
             {
-                Assert.False(iPAddress == IPAddress.Parse("127.0.0.1"));
-            }
-            else
-            {
-                Assert.True(iPAddress == IPAddress.Parse("127.0.0.1"));
+                var localIPs = Dns.GetHostAddresses(Dns.GetHostName()).Select(ip => ip.ToString());
+                Assert.Contains(iPAddress, localIPs);
             }
         }
 

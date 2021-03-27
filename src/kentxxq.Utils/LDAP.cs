@@ -11,10 +11,9 @@ namespace kentxxq.Utils
 {
     public static class LDAP
     {
-        private static readonly int ldapErrorInvalidCredentials = 0x31;
-
         /// <summary>
-        /// 测试ldap连接
+        /// 测试ldap连接<br/>
+        /// 等linux上实现了ssl，才能支持636端口 https://github.com/dotnet/runtime/issues/43890
         /// </summary>
         /// <param name="server">服务器地址 ldap.kentxxq.com</param>
         /// <param name="port">端口号 389/636</param>
