@@ -30,5 +30,15 @@ namespace kentxxq.Utils.Tests
             }
             Assert.False(Net.IsInternal(publicIP));
         }
+
+        [Fact]
+        public void TestGetLocalMac()
+        {
+            var macAddress = Net.GetLocalMac();
+            if (macAddress != "AA-BB-CC-DD-EE-FF")
+            {
+                Assert.NotEqual("127.0.0.1", Net.GetLocalIP().ToString());
+            }
+        }
     }
 }

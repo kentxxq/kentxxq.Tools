@@ -11,6 +11,20 @@ namespace kentxxq.Utils.Demo
     {
         private static void Main(string[] args)
         {
+            #region 测试mac地址
+
+            var v = Net.GetLocalMac();
+            if (v != "AA-BB-CC-DD-EE-FF")
+            {
+                Console.WriteLine("当前网络连接正常(内网)");
+            }
+            else
+            {
+                Console.WriteLine("当前无网络连接");
+            }
+
+            #endregion 测试mac地址
+
             #region 获取本机当前使用的ipv4地址
 
             var iPAddress = Net.GetLocalIP();
