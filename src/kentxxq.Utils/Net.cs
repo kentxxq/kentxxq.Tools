@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -84,6 +86,31 @@ namespace kentxxq.Utils
             if (physicalAddress != null)
             {
                 return String.Join("-", physicalAddress.GetAddressBytes().Select(x => x.ToString("X2")).ToArray());
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 获取当前ipv4的子网掩码
+        /// </summary>
+        /// <returns></returns>
+        public static IPAddress GetNetMask()
+        {
+            var ip = GetLocalIP();
+            var macAddress = GetLocalMac();
+            var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (var nwif in networkInterfaces)
+            {
+                if (nwif.GetPhysicalAddress().ToString() == macAddress.ToString())
+                {
+                    foreach (var item in nwif.GetIPProperties().UnicastAddresses)
+                    {
+                        if (item.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            return item.IPv4Mask;
+                        }
+                    }
+                }
             }
             return null;
         }

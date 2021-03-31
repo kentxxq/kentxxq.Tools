@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Data;
 using System.Linq;
+using kentxxq.Utils;
 
 namespace kentxxq.Utils.Demo
 {
@@ -11,6 +12,18 @@ namespace kentxxq.Utils.Demo
     {
         private static void Main(string[] args)
         {
+            #region 获取当前子网掩码
+
+            var netMask = Net.GetNetMask();
+            if (netMask != null)
+            {
+                Console.WriteLine($"当前子网掩码:{netMask}");
+            }
+
+            //Console.WriteLine($"子网掩码:{Net.GetSubNetIpAddress()}");
+
+            #endregion 获取当前子网掩码
+
             #region 测试mac地址
 
             var macAddressString = Net.GetLocalMacString();

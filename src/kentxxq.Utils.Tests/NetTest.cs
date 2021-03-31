@@ -9,6 +9,9 @@ namespace kentxxq.Utils.Tests
 {
     public class NetTest
     {
+        /// <summary>
+        /// 获取ip地址
+        /// </summary>
         [Fact]
         public void TestGetLocalIPv4()
         {
@@ -20,6 +23,9 @@ namespace kentxxq.Utils.Tests
             }
         }
 
+        /// <summary>
+        /// 判断是否是内网ip
+        /// </summary>
         [Fact]
         public void TestIsIsInternal()
         {
@@ -32,6 +38,9 @@ namespace kentxxq.Utils.Tests
             Assert.False(Net.IsInternal(publicIP));
         }
 
+        /// <summary>
+        /// 获取mac地址
+        /// </summary>
         [Fact]
         public void TestGetLocalMac()
         {
