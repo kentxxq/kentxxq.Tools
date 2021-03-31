@@ -96,7 +96,6 @@ namespace kentxxq.Utils
         /// <returns></returns>
         public static IPAddress GetNetMask()
         {
-            var ip = GetLocalIP();
             var macAddress = GetLocalMac();
             var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
             foreach (var nwif in networkInterfaces)
