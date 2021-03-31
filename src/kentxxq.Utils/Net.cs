@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using SharpPcap;
 
 namespace kentxxq.Utils
 {
@@ -49,23 +50,42 @@ namespace kentxxq.Utils
         }
 
         /// <summary>
-        /// 很丑陋的实现，后面可能会用sharppcap来实现
-        /// 获取当前有网络的mac地址，否则为"AA-BB-CC-DD-EE-FF"<br/>
-        /// 排除接口名Npcap/Hyper/Loop
+        /// 根据当前的内网ipv4地址，来得到对应的mac地址
         /// </summary>
         /// <returns></returns>
-        public static string GetLocalMac()
+        public static PhysicalAddress GetLocalMac()
         {
-            var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
-            foreach (var nwif in networkInterfaces)
+            var ip = GetLocalIP().ToString();
+            var devices = CaptureDeviceList.Instance;
+            foreach (var dev in devices)
             {
-                if (nwif.OperationalStatus == OperationalStatus.Up && !nwif.Description.Contains("Npcap") && !nwif.Description.Contains("Hyper") && !nwif.Description.Contains("Loop") && !nwif.Description.Contains("Loop") && !nwif.Description.Contains("Loop") && !nwif.Description.Contains("lo"))
+                if (dev.ToString().Contains(ip))
                 {
-                    var macAddress = nwif.GetPhysicalAddress().GetAddressBytes();
-                    return string.Join("-", macAddress.Select(x => x.ToString("X2")));
+                    dev.Open();
+                    var result = dev.MacAddress;
+                    dev.Close();
+                    return result;
                 }
             }
-            return "AA-BB-CC-DD-EE-FF";
+            return null;
+        }
+
+        /// <summary>
+        /// 根据当前的内网ipv4地址，来得到对应的mac地址<br/>
+        /// 原理是使用的是抓包工具<br/>
+        /// ubuntu需要安装apt install libpcap-dev<br/>
+        /// windows需要安装pcap<br/>
+        /// 格式:AA-BB-CC-DD-EE-FF
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLocalMacString()
+        {
+            var physicalAddress = GetLocalMac();
+            if (physicalAddress != null)
+            {
+                return String.Join("-", physicalAddress.GetAddressBytes().Select(x => x.ToString("X2")).ToArray());
+            }
+            return null;
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using Xunit;
 
 namespace kentxxq.Utils.Tests
@@ -35,9 +36,10 @@ namespace kentxxq.Utils.Tests
         public void TestGetLocalMac()
         {
             var macAddress = Net.GetLocalMac();
-            if (macAddress != "AA-BB-CC-DD-EE-FF")
+            if (macAddress != null)
             {
-                Assert.NotEqual("127.0.0.1", Net.GetLocalIP().ToString());
+                var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+                Assert.Contains(macAddress, networkInterfaces.Select(n => n.GetPhysicalAddress()));
             }
         }
     }

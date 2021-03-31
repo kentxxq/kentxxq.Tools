@@ -13,10 +13,10 @@ namespace kentxxq.Utils.Demo
         {
             #region 测试mac地址
 
-            var v = Net.GetLocalMac();
-            if (v != "AA-BB-CC-DD-EE-FF")
+            var macAddressString = Net.GetLocalMacString();
+            if (macAddressString != null)
             {
-                Console.WriteLine("当前网络连接正常(内网)");
+                Console.WriteLine($"当前网络连接正常(内网),mac地址为:{macAddressString}");
             }
             else
             {
