@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Dynamic;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using PacketDotNet;
@@ -151,5 +153,33 @@ namespace kentxxq.Utils
                 return null;
             }
         }
+
+        /// <summary>
+        /// 获取本地网关地址
+        /// </summary>
+        /// <returns></returns>
+        public static IPAddress GetLocalGateway()
+        {
+            var device = GetNetDevice();
+            var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (var nwif in networkInterfaces)
+            {
+                var gateways = nwif.GetIPProperties().GatewayAddresses;
+                foreach (var gateway in gateways)
+                {
+                    if (device.ToString().Contains(gateway.Address.ToString()))
+                    {
+                        return gateway.Address;
+                    }
+                }
+            }
+            return null;
+        }
+
+        //public static IPAddress GetIpByPhysicalAddress(PhysicalAddress physicalAddress)
+        //{
+        //    var device = GetNetDevice();
+        //    var rarp = new
+        //}
     }
 }

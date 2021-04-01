@@ -12,6 +12,16 @@ namespace kentxxq.Utils.Demo
     {
         private static void Main(string[] args)
         {
+            #region 获取当前网关和网关mac地址
+
+            var gateway = Net.GetLocalGateway();
+            Console.WriteLine($"网关地址:{gateway}");
+
+            var gatewayMacAddress = Net.GetPhysicalAddressByIp(gateway);
+            Console.WriteLine($"网关MAC地址:{gatewayMacAddress}");
+
+            #endregion 获取当前网关和网关mac地址
+
             #region 获取172.18.76.202的mac地址
 
             var address = Net.GetPhysicalAddressByIp(IPAddress.Parse("172.18.76.202"));
