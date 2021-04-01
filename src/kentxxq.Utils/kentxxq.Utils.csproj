@@ -8,7 +8,7 @@
     <Company>kentxxq.com</Company>
     <Version>1.5.2</Version>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
