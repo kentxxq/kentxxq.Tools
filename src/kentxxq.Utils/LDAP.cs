@@ -32,10 +32,10 @@ namespace kentxxq.Utils
                     if (port == 636)
                     {
                         ldapConnection.SessionOptions.SecureSocketLayer = true;
-                    }
-                    if (!verifySSL)
-                    {
-                        ldapConnection.SessionOptions.VerifyServerCertificate = (_, _) => { return true; };
+                        if (!verifySSL)
+                        {
+                            ldapConnection.SessionOptions.VerifyServerCertificate = (_, _) => { return true; };
+                        }
                     }
                     ldapConnection.SessionOptions.ProtocolVersion = 3;
                     NetworkCredential nc = new NetworkCredential(userDN, password);

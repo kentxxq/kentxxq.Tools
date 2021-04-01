@@ -12,6 +12,20 @@ namespace kentxxq.Utils.Demo
     {
         private static void Main(string[] args)
         {
+            #region 获取172.18.76.202的mac地址
+
+            var address = Net.GetPhysicalAddressByIp(IPAddress.Parse("172.18.76.202"));
+            if (address != null)
+            {
+                Console.WriteLine($"172.18.76.202的mac地址:{string.Join("-", address.GetAddressBytes().Select(x => x.ToString("X2")))}");
+            }
+            else
+            {
+                Console.WriteLine("172.18.76.202获取失败");
+            }
+
+            #endregion 获取172.18.76.202的mac地址
+
             #region 获取当前子网掩码
 
             var netMask = Net.GetNetMask();
@@ -47,7 +61,7 @@ namespace kentxxq.Utils.Demo
 
             #region 测试ldap连接
 
-            var result = LDAP.VerifyLdapConnection("ldap.kentxxq.com", 636, @"cn=admin,dc=ldap,dc=kentxxq,dc=com", "123456");
+            var result = LDAP.VerifyLdapConnection("ldap.kentxxq.com", 389, @"cn=admin,dc=ldap,dc=kentxxq,dc=com", "123456");
             Console.WriteLine($"测试ldap.kentxxq.com的连接:{result}");
 
             #endregion 测试ldap连接

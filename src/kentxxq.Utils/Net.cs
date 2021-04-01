@@ -5,7 +5,11 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using PacketDotNet;
 using SharpPcap;
+using SharpPcap.LibPcap;
+using SharpPcap.Npcap;
+using SharpPcap.WinPcap;
 
 namespace kentxxq.Utils
 {
@@ -57,19 +61,12 @@ namespace kentxxq.Utils
         /// <returns></returns>
         public static PhysicalAddress GetLocalMac()
         {
-            var ip = GetLocalIP().ToString();
-            var devices = CaptureDeviceList.Instance;
-            foreach (var dev in devices)
-            {
-                if (dev.ToString().Contains(ip))
-                {
-                    dev.Open();
-                    var result = dev.MacAddress;
-                    dev.Close();
-                    return result;
-                }
-            }
-            return null;
+            var dev = GetNetDevice();
+            PhysicalAddress physicalAddress;
+            dev.Open();
+            physicalAddress = dev.MacAddress;
+            dev.Close();
+            return physicalAddress;
         }
 
         /// <summary>
@@ -112,6 +109,47 @@ namespace kentxxq.Utils
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// 获取ipv4的网卡设备
+        /// </summary>
+        /// <returns></returns>
+        public static LibPcapLiveDevice GetNetDevice()
+        {
+            var ip = GetLocalIP().ToString();
+            var devices = LibPcapLiveDeviceList.Instance;
+            foreach (var dev in devices)
+            {
+                if (dev.ToString().Contains(ip))
+                {
+                    return dev;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 发送arp包，通过ip获取mac地址
+        /// </summary>
+        /// <param name="ip">ip地址</param>
+        /// <returns></returns>
+        public static PhysicalAddress GetPhysicalAddressByIp(IPAddress ip)
+        {
+            var device = GetNetDevice();
+            var arp = new ARP(device)
+            {
+                Timeout = TimeSpan.FromSeconds(2)
+            };
+            var address = arp.Resolve(ip);
+            if (address != null)
+            {
+                return address;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
