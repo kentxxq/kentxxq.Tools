@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace kentxxq.Utils.Demo
 {
@@ -21,9 +24,23 @@ namespace kentxxq.Utils.Demo
 
             #region 测试ping
 
-            var pingResult = Connection.PingIp(IPAddress.Parse("8.8.8.8"));
+            // todo: 需要继续深入了解异步...
 
-            Console.WriteLine($"是否能连接:{pingResult}");
+            var sw = Stopwatch.StartNew();
+
+            var tt = new List<Task<bool>>();
+            Task<bool> t = null;
+
+            for (int i = 0; i < 5; i++)
+            {
+                //t = new Task<bool>(() => { return Connection.PingIp(IPAddress.Parse("114.114.114.113")); });
+                tt.Add(Task.Run(() => { return Connection.PingIp(IPAddress.Parse("114.114.114.113")); }));
+            }
+
+            Task.WaitAll(tt.ToArray());
+
+            sw.Stop();
+            Console.WriteLine(sw.ElapsedMilliseconds);
 
             #endregion 测试ping
 
