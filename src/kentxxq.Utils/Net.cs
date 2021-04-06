@@ -1,20 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Dynamic;
 using System.Linq;
 using System.Net;
-using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
-using PacketDotNet;
 using SharpPcap;
 using SharpPcap.LibPcap;
-using SharpPcap.Npcap;
-using SharpPcap.WinPcap;
 
 namespace kentxxq.Utils
 {

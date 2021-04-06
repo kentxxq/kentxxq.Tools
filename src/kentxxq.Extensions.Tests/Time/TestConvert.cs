@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 using kentxxq.Extensions.Time;
+using Xunit;
 
 namespace kentxxq.Extensions.Tests.Time
 {

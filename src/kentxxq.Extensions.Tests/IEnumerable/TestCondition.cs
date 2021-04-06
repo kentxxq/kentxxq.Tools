@@ -1,6 +1,6 @@
-﻿using kentxxq.Extensions.IQueryable;
 using System.Collections.Generic;
 using System.Linq;
+using kentxxq.Extensions.IQueryable;
 using Xunit;
 
 namespace kentxxq.Extensions.Tests.IQueryable
