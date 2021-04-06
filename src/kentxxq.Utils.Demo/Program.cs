@@ -5,6 +5,10 @@ using System.Net.NetworkInformation;
 using System.Data;
 using System.Linq;
 using kentxxq.Utils;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace kentxxq.Utils.Demo
 {
@@ -12,6 +16,44 @@ namespace kentxxq.Utils.Demo
     {
         private static void Main(string[] args)
         {
+            #region 打印局域网存活主机
+
+            var watch = Stopwatch.StartNew();
+
+            var ips = Net.GetAliveIpListByICMP();
+            foreach (var ip in ips)
+            {
+                Console.WriteLine(ip.ToString());
+            }
+
+            watch.Stop();
+            Console.WriteLine($"耗时{ watch.ElapsedMilliseconds}毫秒");
+
+            #endregion 打印局域网存活主机
+
+            #region 测试ping
+
+            watch.Restart();
+
+            var pingResult = Connection.PingIp(IPAddress.Parse("114.114.114.114"));
+
+            Console.WriteLine($"是否能连接:{pingResult}");
+
+            watch.Stop();
+            Console.WriteLine($"耗时{ watch.ElapsedMilliseconds}毫秒");
+
+            #endregion 测试ping
+
+            #region 发送rarp包
+
+            //var piMacAddress = PhysicalAddress.Parse("F4-4C-70-40-3F-89");
+
+            //var ip = Net.GetIpByPhysicalAddress(piMacAddress);
+
+            //Console.WriteLine($"{ip}");
+
+            #endregion 发送rarp包
+
             #region 获取当前网关和网关mac地址
 
             var gateway = Net.GetLocalGateway();
@@ -71,8 +113,8 @@ namespace kentxxq.Utils.Demo
 
             #region 测试ldap连接
 
-            var result = LDAP.VerifyLdapConnection("ldap.kentxxq.com", 389, @"cn=admin,dc=ldap,dc=kentxxq,dc=com", "123456");
-            Console.WriteLine($"测试ldap.kentxxq.com的连接:{result}");
+            var ldapResult = LDAP.VerifyLdapConnection("ldap.kentxxq.com", 389, @"cn=admin,dc=ldap,dc=kentxxq,dc=com", "123456");
+            Console.WriteLine($"测试ldap.kentxxq.com的连接:{ldapResult}");
 
             #endregion 测试ldap连接
         }

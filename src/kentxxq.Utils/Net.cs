@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
 using PacketDotNet;
 using SharpPcap;
 using SharpPcap.LibPcap;
@@ -176,10 +179,103 @@ namespace kentxxq.Utils
             return null;
         }
 
-        //public static IPAddress GetIpByPhysicalAddress(PhysicalAddress physicalAddress)
-        //{
-        //    var device = GetNetDevice();
-        //    var rarp = new
-        //}
+        /// <summary>
+        /// 获取当前网段下的所有ip
+        /// </summary>
+        public static System.Net.IPAddressCollection GetAllSubnetIp()
+        {
+            var localIp = GetLocalIP();
+            var netMask = GetNetMask();
+            var iPNetwork = IPNetwork.Parse(localIp, netMask);
+            var ips = iPNetwork.ListIPAddress();
+            return ips;
+        }
+
+        /// <summary>
+        /// 拿到当前内网可以ping通的存活主机
+        /// </summary>
+        /// <returns></returns>
+        public static List<IPAddress> GetAliveIpListByICMP()
+        {
+            var ips = GetAllSubnetIp();
+            var aliveIps = new List<IPAddress>();
+            var taskList = new List<Task<bool>>();
+            foreach (var ip in ips)
+            {
+                taskList.Add(Task.Run(() => Connection.PingIp(ip)));
+            }
+            Task.WaitAll(taskList.ToArray());
+            for (int i = 0; i < taskList.Count; i++)
+            {
+                if (taskList[i].Result)
+                {
+                    aliveIps.Add(ips[i]);
+                }
+            }
+            return aliveIps;
+        }
+
+        /// <summary>
+        /// 通过mac地址获取ip，基于ICMP遍历主机实现。速度很慢
+        /// </summary>
+        /// <param name="physicalAddress"></param>
+        /// <returns></returns>
+        public static IPAddress GetIpByPhysicalAddress(PhysicalAddress physicalAddress)
+        {
+            #region rarp方式，但是通常路由器并未开启rarp模式
+
+            //var device = GetNetDevice();
+            //var localIp = GetLocalIP();
+            //var localMacAddress = GetLocalMac();
+            //var gatewayIp = GetLocalGateway();
+            //var gatewayMacAddress = GetPhysicalAddressByIp(gatewayIp);
+            //var ethernet = new EthernetPacket(localMacAddress, gatewayMacAddress, EthernetType.ReverseArp);
+            //var rarp = new ArpPacket(ArpOperation.RequestReverse, physicalAddress, gatewayIp, localMacAddress, localIp);
+            //ethernet.PayloadPacket = rarp;
+
+            //device.Open(DeviceMode.Promiscuous);
+            //var sendTime = DateTime.Now;
+
+            //var sendTimes = 1;
+            //ArpPacket responsePacket = null;
+            //while ((DateTime.Now - sendTime).TotalSeconds < 5)
+            //{
+            //    var response = device.GetNextPacket();
+            //    if (sendTimes > 1)
+            //    {
+            //        device.SendPacket(ethernet);
+            //        sendTimes -= 1;
+            //    }
+            //    if (response != null)
+            //    {
+            //        responsePacket = Packet.ParsePacket(response.LinkLayerType, response.Data).Extract<ArpPacket>();
+            //        if (responsePacket != null && responsePacket.Operation == ArpOperation.ReplyReverse)
+            //        {
+            //            break;
+            //        }
+            //    }
+            //}
+            //device.Close();
+            //var xx = new ArpPacket(responsePacket.PayloadPacket.BytesSegment);
+
+            //return xx.TargetProtocolAddress;
+
+            #endregion rarp方式，但是通常路由器并未开启rarp模式
+
+            #region 遍历存活主机来获取ip地址
+
+            var aliveIps = GetAliveIpListByICMP();
+            foreach (var aliveIp in aliveIps)
+            {
+                var macAddress = GetPhysicalAddressByIp(aliveIp);
+                if (macAddress == physicalAddress)
+                {
+                    return aliveIp;
+                }
+            }
+            return null;
+
+            #endregion 遍历存活主机来获取ip地址
+        }
     }
 }
