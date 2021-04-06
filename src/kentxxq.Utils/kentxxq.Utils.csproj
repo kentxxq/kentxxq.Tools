@@ -6,7 +6,7 @@
     <RepositoryUrl>https://github.com/kentxxq/kentxxq.Tools</RepositoryUrl>
     <Authors>kentxxq</Authors>
     <Company>kentxxq.com</Company>
-    <Version>1.7.1</Version>
+    <Version>1.7.2</Version>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>

@@ -16,18 +16,28 @@ namespace kentxxq.Utils.Demo
     {
         private static void Main(string[] args)
         {
+            var tt = new List<Task>();
+            for (int i = 0; i < 1000; i++)
+            {
+                tt.Add(Task.Run(() => { Connection.PingIp(IPAddress.Parse("114.114.114.113")); }));
+            }
+
+            Task.WaitAll(tt.ToArray());
+
+            Console.WriteLine("qqqq");
+
             #region 打印局域网存活主机
 
             var watch = Stopwatch.StartNew();
 
-            var ips = Net.GetAliveIpListByICMP();
-            foreach (var ip in ips)
-            {
-                Console.WriteLine(ip.ToString());
-            }
+            //var ips = Net.GetAliveIpListByICMP();
+            //foreach (var ip in ips)
+            //{
+            //    Console.WriteLine(ip.ToString());
+            //}
 
-            watch.Stop();
-            Console.WriteLine($"耗时{ watch.ElapsedMilliseconds}毫秒");
+            //watch.Stop();
+            //Console.WriteLine($"耗时{ watch.ElapsedMilliseconds}毫秒");
 
             #endregion 打印局域网存活主机
 
@@ -35,7 +45,7 @@ namespace kentxxq.Utils.Demo
 
             watch.Restart();
 
-            var pingResult = Connection.PingIp(IPAddress.Parse("114.114.114.114"));
+            var pingResult = Connection.PingIp(IPAddress.Parse("8.8.8.8"));
 
             Console.WriteLine($"是否能连接:{pingResult}");
 
