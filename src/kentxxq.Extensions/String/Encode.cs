@@ -6,6 +6,11 @@ namespace kentxxq.Extensions.String
 {
     public static class Encode
     {
+        /// <summary>
+        /// 计算文本的sha256
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static string Sha256(this string text)
         {
             using (var sha256 = SHA256.Create())
