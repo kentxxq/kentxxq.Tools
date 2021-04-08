@@ -12,6 +12,13 @@ namespace kentxxq.Utils.Demo
     {
         private static void Main(string[] args)
         {
+            #region 测试mysql连接
+
+            var result = Connection.TryConnectMysql("db4free.net", "kentxxq", "kentxxq_test_db", "kentxxq_test_db");
+            Console.WriteLine($"mysql连接结果:{result}");
+
+            #endregion 测试mysql连接
+
             #region 打印局域网存活主机
 
             //var ips = Net.GetAliveIpListByICMP();
@@ -28,31 +35,21 @@ namespace kentxxq.Utils.Demo
 
             var sw = Stopwatch.StartNew();
 
-            var tt = new List<Task<bool>>();
-            Task<bool> t = null;
+            //var tt = new List<Task<bool>>();
+            //Task<bool> t = null;
 
-            for (int i = 0; i < 5; i++)
-            {
-                //t = new Task<bool>(() => { return Connection.PingIp(IPAddress.Parse("114.114.114.113")); });
-                tt.Add(Task.Run(() => { return Connection.PingIp(IPAddress.Parse("114.114.114.113")); }));
-            }
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    //t = new Task<bool>(() => { return Connection.PingIp(IPAddress.Parse("114.114.114.113")); });
+            //    tt.Add(Task.Run(() => { return Connection.PingIp(IPAddress.Parse("114.114.114.113")); }));
+            //}
 
-            Task.WaitAll(tt.ToArray());
+            //Task.WaitAll(tt.ToArray());
 
-            sw.Stop();
-            Console.WriteLine(sw.ElapsedMilliseconds);
+            //sw.Stop();
+            //Console.WriteLine(sw.ElapsedMilliseconds);
 
             #endregion 测试ping
-
-            #region 发送rarp包
-
-            //var piMacAddress = PhysicalAddress.Parse("F4-4C-70-40-3F-89");
-
-            //var ip = Net.GetIpByPhysicalAddress(piMacAddress);
-
-            //Console.WriteLine($"{ip}");
-
-            #endregion 发送rarp包
 
             #region 获取当前网关和网关mac地址
 
