@@ -110,7 +110,7 @@ namespace kentxxq.Utils.Demo
 
             #region 测试ldap连接
 
-            var ldapResult = LDAP.VerifyLdapConnection("ldap.kentxxq.com", 389, @"cn=admin,dc=ldap,dc=kentxxq,dc=com", "123456");
+            var ldapResult = LDAP.VerifyLdapConnection("ldap.kentxxq.com", 636, @"cn=admin,dc=ldap,dc=kentxxq,dc=com", "123456", true);
             Console.WriteLine($"测试ldap.kentxxq.com的连接:{ldapResult}");
 
             #endregion 测试ldap连接
