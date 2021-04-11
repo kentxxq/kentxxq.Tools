@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using MySqlConnector;
 
 namespace kentxxq.Utils
 {
@@ -48,11 +49,12 @@ namespace kentxxq.Utils
         /// <returns>bool值确定是否连接成功</returns>
         public static bool TryConnectMysql(string server, string username, string password, string db)
         {
-            MySql.Data.MySqlClient.MySqlConnection conn;
+            MySqlConnection conn;
+
             string myConnectionString;
 
             myConnectionString = $"server={server};uid={username};pwd={password};database={db}";
-            conn = new MySql.Data.MySqlClient.MySqlConnection();
+            conn = new MySqlConnection();
             bool result = false;
             try
             {
@@ -60,7 +62,7 @@ namespace kentxxq.Utils
                 conn.Open();
                 result = true;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -77,11 +79,11 @@ namespace kentxxq.Utils
         /// <returns>bool值确定是否连接成功</returns>
         public static async Task<bool> TryConnectMysqlAsync(string server, string username, string password, string db)
         {
-            MySql.Data.MySqlClient.MySqlConnection conn;
+            MySqlConnection conn;
             string myConnectionString;
 
             myConnectionString = $"server={server};uid={username};pwd={password};database={db}";
-            conn = new MySql.Data.MySqlClient.MySqlConnection();
+            conn = new MySqlConnection();
             bool result = false;
             try
             {
@@ -89,7 +91,7 @@ namespace kentxxq.Utils
                 await conn.OpenAsync();
                 result = true;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 Console.WriteLine(ex.Message);
             }
