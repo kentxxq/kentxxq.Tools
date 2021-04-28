@@ -22,9 +22,9 @@ namespace kentxxq.Extensions.Time
         /// <returns></returns>
         public static DateTime ToDateTime(this double data)
         {
-            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-            dtDateTime.AddMilliseconds(data).ToLocalTime();
-            return dtDateTime;
+            DateTime initDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            var result = initDateTime.AddMilliseconds(data).ToLocalTime();
+            return result;
         }
     }
 }
