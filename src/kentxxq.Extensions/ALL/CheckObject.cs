@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace kentxxq.Extensions.ALL
 {
     public static class CheckObject
@@ -18,9 +12,29 @@ namespace kentxxq.Extensions.ALL
         {
             var t = o.GetType();
             var properties = t.GetProperties();
-            foreach (var porperty in properties)
+            foreach (var property in properties)
             {
-                if (porperty.GetValue(o) == null || porperty.GetValue(o).ToString() == "")
+                if (property.GetValue(o) == null || property.GetValue(o).ToString() == "")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 检查所有属性是否有一个不为null或""空字符串
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        public static bool AnyValue<T>(this T o)
+        {
+            var t = o.GetType();
+            var properties = t.GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.GetValue(o) != null || property.GetValue(o).ToString() != "")
                 {
                     return true;
                 }
