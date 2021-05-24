@@ -10,11 +10,12 @@ namespace kentxxq.Extensions.ALL
         /// <returns></returns>
         public static bool AnyEmptyOrNull<T>(this T o)
         {
+            if (o == null) return true;
             var t = o.GetType();
             var properties = t.GetProperties();
             foreach (var property in properties)
             {
-                if (property.GetValue(o) == null || property.GetValue(o).ToString() == "")
+                if (property.GetValue(o) == null || property.GetValue(o)?.ToString() == "")
                 {
                     return true;
                 }
@@ -30,11 +31,12 @@ namespace kentxxq.Extensions.ALL
         /// <returns></returns>
         public static bool AnyValue<T>(this T o)
         {
+            if (o == null) return true;
             var t = o.GetType();
             var properties = t.GetProperties();
             foreach (var property in properties)
             {
-                if (property.GetValue(o) != null || property.GetValue(o).ToString() != "")
+                if (property.GetValue(o) != null || property.GetValue(o)?.ToString() != "")
                 {
                     return true;
                 }

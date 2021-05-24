@@ -11,7 +11,7 @@ namespace kentxxq.Extensions.Tests.ALL
         public int Id { get; set; }
 
         [Description("用户名")]
-        public string Name;
+        public string Name = null!;
     }
 
     public class TestGetAttr

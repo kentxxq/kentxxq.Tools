@@ -66,9 +66,8 @@ namespace kentxxq.Extensions.ALL
         public static List<string> GetEnumDescriptions(this Enum enumValue)
         {
             var fieldInfo = enumValue.GetType().GetField(enumValue.ToString());
-
-            var descriptionAttributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
-
+            var descriptionAttributes = (DescriptionAttribute[]?)fieldInfo?.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            descriptionAttributes ??= Array.Empty<DescriptionAttribute>();
             return descriptionAttributes.Select(d => d.Description).ToList();
         }
     }

@@ -1,17 +1,9 @@
 using Xunit;
-using Xunit.Abstractions;
 
 namespace kentxxq.Utils.Tests
 {
     public class TestLDAP
     {
-        private readonly ITestOutputHelper output;
-
-        public TestLDAP(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
-
         [Fact]
         public void TestVerifyLdapConnection()
         {

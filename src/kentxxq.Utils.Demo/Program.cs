@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace kentxxq.Utils.Demo
 {
@@ -56,8 +54,12 @@ namespace kentxxq.Utils.Demo
             var gateway = Net.GetLocalGateway();
             Console.WriteLine($"网关地址:{gateway}");
 
-            var gatewayMacAddress = Net.GetPhysicalAddressByIp(gateway);
-            Console.WriteLine($"网关MAC地址:{gatewayMacAddress}");
+            if (gateway != null)
+            {
+                var gatewayMacAddress = Net.GetPhysicalAddressByIp(gateway);
+                Console.WriteLine($"网关MAC地址:{gatewayMacAddress}");
+            }
+
 
             #endregion 获取当前网关和网关mac地址
 

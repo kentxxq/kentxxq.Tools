@@ -24,7 +24,8 @@ namespace kentxxq.Utils
             {
                 using Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0);
                 socket.Connect("223.5.5.5", 53);
-                IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
+                var endPoint = socket.LocalEndPoint as IPEndPoint;
+                endPoint ??= new IPEndPoint(IPAddress.Loopback, 0);
                 return endPoint.Address;
             }
             catch (Exception)
@@ -56,13 +57,12 @@ namespace kentxxq.Utils
         /// 根据当前的内网ipv4地址，来得到对应的mac地址
         /// </summary>
         /// <returns></returns>
-        public static PhysicalAddress GetLocalMac()
+        public static PhysicalAddress? GetLocalMac()
         {
             var dev = GetNetDevice();
-            PhysicalAddress physicalAddress;
-            dev.Open();
-            physicalAddress = dev.MacAddress;
-            dev.Close();
+            dev?.Open();
+            var physicalAddress = dev?.MacAddress;
+            dev?.Close();
             return physicalAddress;
         }
 
@@ -74,7 +74,7 @@ namespace kentxxq.Utils
         /// 格式:AA-BB-CC-DD-EE-FF
         /// </summary>
         /// <returns></returns>
-        public static string GetLocalMacString()
+        public static string? GetLocalMacString()
         {
             var physicalAddress = GetLocalMac();
             if (physicalAddress != null)
@@ -94,7 +94,7 @@ namespace kentxxq.Utils
             var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
             foreach (var nwif in networkInterfaces)
             {
-                if (nwif.GetPhysicalAddress().ToString() == macAddress.ToString())
+                if (nwif.GetPhysicalAddress().ToString() == macAddress?.ToString())
                 {
                     foreach (var item in nwif.GetIPProperties().UnicastAddresses)
                     {
@@ -105,14 +105,14 @@ namespace kentxxq.Utils
                     }
                 }
             }
-            return null;
+            return IPAddress.Loopback;
         }
 
         /// <summary>
         /// 获取ipv4的网卡设备
         /// </summary>
         /// <returns></returns>
-        public static LibPcapLiveDevice GetNetDevice()
+        public static LibPcapLiveDevice? GetNetDevice()
         {
             var ip = GetLocalIP().ToString();
             var devices = LibPcapLiveDeviceList.Instance;
@@ -131,7 +131,7 @@ namespace kentxxq.Utils
         /// </summary>
         /// <param name="ip">ip地址</param>
         /// <returns></returns>
-        public static PhysicalAddress GetPhysicalAddressByIp(IPAddress ip)
+        public static PhysicalAddress? GetPhysicalAddressByIp(IPAddress ip)
         {
             var device = GetNetDevice();
             var arp = new ARP(device)
@@ -139,32 +139,28 @@ namespace kentxxq.Utils
                 Timeout = TimeSpan.FromSeconds(2)
             };
             var address = arp.Resolve(ip);
-            if (address != null)
-            {
-                return address;
-            }
-            else
-            {
-                return null;
-            }
+            return address;
         }
 
         /// <summary>
         /// 获取本地网关地址
         /// </summary>
         /// <returns></returns>
-        public static IPAddress GetLocalGateway()
+        public static IPAddress? GetLocalGateway()
         {
             var device = GetNetDevice();
-            var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
-            foreach (var nwif in networkInterfaces)
+            if (device != null)
             {
-                var gateways = nwif.GetIPProperties().GatewayAddresses;
-                foreach (var gateway in gateways)
+                var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+                foreach (var nwif in networkInterfaces)
                 {
-                    if (device.ToString().Contains(gateway.Address.ToString()))
+                    var gateways = nwif.GetIPProperties().GatewayAddresses;
+                    foreach (var gateway in gateways)
                     {
-                        return gateway.Address;
+                        if (device.ToString().Contains(gateway.Address.ToString()))
+                        {
+                            return gateway.Address;
+                        }
                     }
                 }
             }
@@ -212,7 +208,7 @@ namespace kentxxq.Utils
         /// </summary>
         /// <param name="physicalAddress"></param>
         /// <returns></returns>
-        public static IPAddress GetIpByPhysicalAddress(PhysicalAddress physicalAddress)
+        public static IPAddress? GetIpByPhysicalAddress(PhysicalAddress physicalAddress)
         {
             #region rarp方式，但是通常路由器并未开启rarp模式
 
