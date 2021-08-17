@@ -1,0 +1,25 @@
+name: Upload dotnet package
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'package name'
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x' # SDK Version to use.
+      - run: cd src
+      - name: Create the package
+        run: dotnet pack --configuration Release ${{ github.event.inputs.package }}
+      - name: Publish the package to GPR
+        run: dotnet nuget push ${{ github.event.inputs.package }}/bin/Release/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
