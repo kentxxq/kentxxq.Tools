@@ -18,8 +18,9 @@ jobs:
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x' # SDK Version to use.
-      - run: cd src
       - name: Create the package
-        run: dotnet pack --configuration Release ${{ github.event.inputs.package }}
+        run: |
+          cd src
+          dotnet pack --configuration Release ${{ github.event.inputs.package }}
       - name: Publish the package to GPR
-        run: dotnet nuget push ${{ github.event.inputs.package }}/bin/Release/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push src/${{ github.event.inputs.package }}/bin/Release/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
