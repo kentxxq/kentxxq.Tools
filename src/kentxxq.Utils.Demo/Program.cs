@@ -3,13 +3,30 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using kentxxq.Extensions.String;
+using kentxxq.Utils;
 
-namespace kentxxq.Utils.Demo
+namespace kentxxq.Demo
 {
     internal class Program
     {
         private static void Main(string[] args)
         {
+            #region 测试解析
+
+            var url = "kenxxq:443";
+            try
+            {
+                var iPEndPoint = url.UrlToIPEndPoint();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"解析失败:{e.Message}");
+            }
+
+
+            #endregion
+
             #region 测试mysql连接
 
             var result = Connection.TryConnectMysql("db4free.net", "kentxxq", "kentxxq_test_db", "kentxxq_test_db");

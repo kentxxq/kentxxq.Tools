@@ -11,19 +11,11 @@ namespace kentxxq.Extensions.String
         /// <returns></returns>
         public static IPEndPoint UrlToIPEndPoint(this string url)
         {
-            try
-            {
-                var host = url.Split(":")[0];
-                var ip = Dns.GetHostAddresses(host)[0];
-                var port = url.Split(":")[1];
-                var ipEndPoint = new IPEndPoint(ip, int.Parse(port));
-                return ipEndPoint;
-            }
-            catch (System.Exception e)
-            {
-                throw new System.Exception($"解析失败:{e.Message}");
-            }
-
+            var host = url.Split(":")[0];
+            var ip = Dns.GetHostAddresses(host)[0];
+            var port = url.Split(":")[1];
+            var ipEndPoint = new IPEndPoint(ip, int.Parse(port));
+            return ipEndPoint;
         }
     }
 }

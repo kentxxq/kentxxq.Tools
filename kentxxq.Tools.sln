@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kentxxq.Utils.Demo", "src\kentxxq.Utils.Demo\kentxxq.Utils.Demo.csproj", "{D609B93A-2B63-43AC-B6C2-0691FC98BF25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kentxxq.Demo", "src\kentxxq.Utils.Demo\kentxxq.Demo.csproj", "{D609B93A-2B63-43AC-B6C2-0691FC98BF25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
