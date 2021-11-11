@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Company>kentxxq.com</Company>
     <Authors>kentxxq</Authors>
     <PackageProjectUrl>https://github.com/kentxxq/kentxxq.Tools</PackageProjectUrl>
@@ -9,7 +9,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <Version>1.7.2</Version>
+    <Version>2.0.1</Version>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Nullable>enable</Nullable>
   </PropertyGroup>
