@@ -2,19 +2,18 @@ using System;
 using kentxxq.Extensions.Time;
 using Xunit;
 
-namespace kentxxq.Extensions.Tests.Time
-{
-    public class TestConvert
-    {
-        //private static readonly DateTime dateTime = new(1993, 7, 6);
+namespace kentxxq.Extensions.Tests.Time;
 
-        [Fact]
-        public void TestToUnixTimeMilliseconds()
-        {
-            DateTime dateTime = new(1993, 7, 6);
-            var result = dateTime.ToUnixTimeMilliseconds();
-            long expected = 741888000000;
-            Assert.Equal(expected, result);
-        }
+public class TestConvert
+{
+    //private static readonly DateTime dateTime = new(1993, 7, 6);
+
+    [Fact]
+    public void TestToUnixTimeMilliseconds()
+    {
+        DateTime dateTime = new(1993, 7, 6);
+        var result = dateTime.ToUnixTimeMilliseconds();
+        var expected = 741888000000;
+        Assert.Equal(expected, result);
     }
 }

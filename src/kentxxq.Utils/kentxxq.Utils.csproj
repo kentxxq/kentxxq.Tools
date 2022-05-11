@@ -1,29 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <PackageProjectUrl>https://github.com/kentxxq/kentxxq.Tools</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/kentxxq/kentxxq.Tools</RepositoryUrl>
-    <Authors>kentxxq</Authors>
-    <Company>kentxxq.com</Company>
-    <Version>2.0.1</Version>
-    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <PackageProjectUrl>https://github.com/kentxxq/kentxxq.Tools</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/kentxxq/kentxxq.Tools</RepositoryUrl>
+        <Authors>kentxxq</Authors>
+        <Company>kentxxq.com</Company>
+        <Version>2.0.1</Version>
+        <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="IPNetwork2" Version="2.5.412" />
-    <PackageReference Include="MySqlConnector" Version="2.1.8" />
-    <PackageReference Include="Novell.Directory.Ldap.NETStandard" Version="3.6.0" />
-    <PackageReference Include="SharpPcap" Version="6.2.1" />
-    <PackageReference Include="System.DirectoryServices.Protocols" Version="6.0.1" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="IPNetwork2" Version="2.5.412"/>
+        <PackageReference Include="MySqlConnector" Version="2.1.8"/>
+        <PackageReference Include="Novell.Directory.Ldap.NETStandard" Version="3.6.0"/>
+        <PackageReference Include="SharpPcap" Version="6.2.1"/>
+        <PackageReference Include="System.DirectoryServices.Protocols" Version="6.0.1"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\..\LICENSE.md">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE.md">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
 </Project>
