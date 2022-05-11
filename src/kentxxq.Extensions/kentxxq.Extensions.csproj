@@ -12,6 +12,7 @@
         <Version>2.0.1</Version>
         <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
         <Nullable>enable</Nullable>
+        <PackageVersion>2.0.2</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
