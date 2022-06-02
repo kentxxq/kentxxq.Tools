@@ -6,7 +6,7 @@ using Xunit;
 
 namespace kentxxq.Utils.Tests;
 
-public class NetTest
+public class TestNet
 {
     /// <summary>
     /// 获取ip地址

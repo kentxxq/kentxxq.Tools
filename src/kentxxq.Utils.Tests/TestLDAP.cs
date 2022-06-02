@@ -2,7 +2,7 @@ using Xunit;
 
 namespace kentxxq.Utils.Tests;
 
-public class TestLDAP
+public class TestLdap
 {
     [Fact]
     public void TestVerifyLdapConnection()
