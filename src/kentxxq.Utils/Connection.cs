@@ -32,7 +32,7 @@ public static class Connection
     /// <param name="url">主机或ip地址</param>
     /// <param name="ttl">最大跳转数</param>
     /// <returns></returns>
-    public static PingReply Ping(string url, int ttl)
+    public static PingReply Ping(string url, int ttl=128)
     {
         var ping = new Ping();
         PingOptions pingOptions = new()
