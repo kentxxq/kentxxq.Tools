@@ -25,6 +25,29 @@ public static class Connection
         var reply = pingSender.Send(ip, timeout, buffer, pingOption);
         return reply.Status == IPStatus.Success;
     }
+    
+    /// <summary>
+    /// ping特定主机或ip
+    /// </summary>
+    /// <param name="url">主机或ip地址</param>
+    /// <param name="ttl">最大跳转数</param>
+    /// <returns></returns>
+    public static PingReply Ping(string url, int ttl)
+    {
+        var ping = new Ping();
+        PingOptions pingOptions = new()
+        {
+            DontFragment = true,
+            Ttl = ttl
+        };
+
+        const string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        var buffer = Encoding.ASCII.GetBytes(data);
+        const int timeout = 1000; // 毫秒
+        var reply = ping.Send(url, timeout, buffer, pingOptions);
+
+        return reply;
+    }
 
     /// <summary>
     /// ping异步测试
