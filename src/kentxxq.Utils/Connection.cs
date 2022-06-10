@@ -13,14 +13,14 @@ public static class Connection
     /// ping测试
     /// </summary>
     /// <param name="ip"></param>
+    /// <param name="timeout">超时时间(毫秒)</param>
     /// <returns></returns>
-    public static bool PingIp(IPAddress ip)
+    public static bool PingIp(IPAddress ip,int timeout=1000)
     {
         var pingSender = new Ping();
         // 32字节数据
-        var data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        const string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         var buffer = Encoding.ASCII.GetBytes(data);
-        var timeout = 100;
         var pingOption = new PingOptions(64, true);
         var reply = pingSender.Send(ip, timeout, buffer, pingOption);
         return reply.Status == IPStatus.Success;
@@ -31,8 +31,9 @@ public static class Connection
     /// </summary>
     /// <param name="url">主机或ip地址</param>
     /// <param name="ttl">最大跳转数</param>
+    /// <param name="timeout">超时时间(毫秒)</param>
     /// <returns></returns>
-    public static PingReply Ping(string url, int ttl=128)
+    public static PingReply Ping(string url, int ttl=128,int timeout=1000)
     {
         var ping = new Ping();
         PingOptions pingOptions = new()
@@ -43,7 +44,6 @@ public static class Connection
 
         const string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         var buffer = Encoding.ASCII.GetBytes(data);
-        const int timeout = 1000; // 毫秒
         var reply = ping.Send(url, timeout, buffer, pingOptions);
 
         return reply;
@@ -53,14 +53,14 @@ public static class Connection
     /// ping异步测试
     /// </summary>
     /// <param name="ip"></param>
+    /// <param name="timeout">超时时间(毫秒)</param>
     /// <returns></returns>
-    public static async Task<bool> PingIpAsync(IPAddress ip)
+    public static async Task<bool> PingIpAsync(IPAddress ip,int timeout=1000)
     {
         var pingSender = new Ping();
         // 32字节数据
-        var data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        const string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         var buffer = Encoding.ASCII.GetBytes(data);
-        var timeout = 100;
         var pingOption = new PingOptions(64, true);
         var reply = await pingSender.SendPingAsync(ip, timeout, buffer, pingOption);
         return reply.Status == IPStatus.Success;
