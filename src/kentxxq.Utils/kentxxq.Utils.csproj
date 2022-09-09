@@ -9,7 +9,7 @@
         <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <Nullable>enable</Nullable>
-        <PackageVersion>2.0.7</PackageVersion>
+        <PackageVersion>2.0.8</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

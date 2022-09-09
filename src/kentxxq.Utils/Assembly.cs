@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace kentxxq.Utils;
 
+[Obsolete("Use ThisAssembly instead")]
 public static class Assembly
 {
     public static string? GetAssemblyInformationalVersion()
