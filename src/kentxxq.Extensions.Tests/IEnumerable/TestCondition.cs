@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using kentxxq.Extensions.IQueryable;
+using kentxxq.Extensions.IEnumerable;
 using Xunit;
 
-namespace kentxxq.Extensions.Tests.IQueryable;
+namespace kentxxq.Extensions.Tests.IEnumerable;
 
 public class TestCondition
 {

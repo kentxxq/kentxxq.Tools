@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace kentxxq.Extensions.IQueryable;
+namespace kentxxq.Extensions.IEnumerable;
 
 public static class Condition
 {
